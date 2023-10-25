@@ -209,4 +209,32 @@ public static class StringExtensions
 
         return output;
     }
+
+    /// <summary>
+    /// Truncates a string based on the length the string takes up in console.
+    /// </summary>
+    /// <param name="text">The string to truncate.</param>
+    /// <param name="maxExpectedLength">The maximum length of the resultant string.</param>
+    /// <returns>A truncated string.</returns>
+    internal static string Truncate(this string text, int maxExpectedLength)
+    {
+        if (string.IsNullOrEmpty(text) || maxExpectedLength < 0 || text.Length < maxExpectedLength)
+        {
+            return text;
+        }
+
+        var cellCount = text.GetCellWidth();
+
+        var builder = new StringBuilder(text);
+        var i = builder.Length - 1;
+        while (cellCount > maxExpectedLength && i >= 0)
+        {
+            cellCount -= UnicodeCalculator.GetWidth(builder[i]);
+            i--;
+        }
+
+        builder.Remove(i + 1, builder.Length - i - 1);
+
+        return builder.ToString();
+    }
 }

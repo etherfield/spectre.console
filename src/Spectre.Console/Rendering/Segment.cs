@@ -323,15 +323,16 @@ public class Segment
     /// <param name="segment">The segment to split.</param>
     /// <param name="overflow">The overflow strategy to use.</param>
     /// <param name="maxWidth">The maximum width.</param>
+    /// <param name="cellCount">The number of cells occupied by the segment in the console.</param>
     /// <returns>A list of segments that has been split.</returns>
-    public static List<Segment> SplitOverflow(Segment segment, Overflow? overflow, int maxWidth)
+    public static List<Segment> SplitOverflow(Segment segment, Overflow? overflow, int maxWidth, int cellCount)
     {
         if (segment is null)
         {
             throw new ArgumentNullException(nameof(segment));
         }
 
-        if (segment.CellCount() <= maxWidth)
+        if (cellCount <= maxWidth)
         {
             return new List<Segment>(1) { segment };
         }
@@ -357,7 +358,7 @@ public class Segment
             }
             else
             {
-                result.Add(new Segment(segment.Text.Substring(0, maxWidth), segment.Style));
+                result.Add(new Segment(segment.Text.Truncate(maxWidth), segment.Style));
             }
         }
         else if (overflow == Overflow.Ellipsis)
@@ -368,7 +369,7 @@ public class Segment
             }
             else
             {
-                result.Add(new Segment(segment.Text.Substring(0, maxWidth - 1) + "…", segment.Style));
+                result.Add(new Segment(segment.Text.Truncate(maxWidth - 1) + "…", segment.Style));
             }
         }
 

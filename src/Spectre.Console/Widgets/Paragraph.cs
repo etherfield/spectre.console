@@ -234,7 +234,7 @@ public sealed class Paragraph : Renderable, IHasJustification, IOverflowable
             {
                 // The current segment is longer than the width of the console,
                 // so we will need to crop it up, into new segments.
-                var segments = Segment.SplitOverflow(current, Overflow, maxWidth);
+                var segments = Segment.SplitOverflow(current, Overflow, maxWidth, length);
                 if (segments.Count > 0)
                 {
                     if (line.CellCount() + segments[0].CellCount() > maxWidth)
