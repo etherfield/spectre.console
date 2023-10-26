@@ -1,6 +1,6 @@
 namespace Spectre.Console.Tests.Unit.Extensions;
 
-public class StringExtensionsTests
+public sealed class StringExtensionsTests
 {
     public sealed class TheTruncateMethod
     {

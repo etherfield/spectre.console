@@ -218,12 +218,16 @@ public static class StringExtensions
     /// <returns>A truncated string.</returns>
     internal static string Truncate(this string text, int maxExpectedLength)
     {
-        if (string.IsNullOrEmpty(text) || maxExpectedLength < 0 || text.Length < maxExpectedLength)
+        if (string.IsNullOrEmpty(text) || maxExpectedLength < 0)
         {
             return text;
         }
 
         var cellCount = text.GetCellWidth();
+        if (maxExpectedLength > cellCount)
+        {
+            return text;
+        }
 
         var builder = new StringBuilder(text);
         var i = builder.Length - 1;
